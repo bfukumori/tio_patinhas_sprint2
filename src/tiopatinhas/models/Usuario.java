@@ -89,7 +89,7 @@ public class Usuario {
         this.dtNascimento = dtNascimento;
         this.cpf = cpf;
         this.telefone = telefone;
-//        this.contas = new ArrayList<>();
+        this.contas = new ArrayList<>();
     }
 
     public void alterarSenha(String senha) {
