@@ -1,3 +1,5 @@
+package br.com.fiap.model;
+
 import java.util.Date;
 
 public class Ordem {
@@ -7,7 +9,7 @@ public class Ordem {
     float montante;
     String status;
 
-    public Ordem(int idOrdem, String tipo, float montante, String status){
+    public Ordem(int idOrdem, String tipo, float montante, String status) {
         this.idOrdem = idOrdem;
         this.tipo = tipo;
         this.montante = montante;
@@ -15,43 +17,43 @@ public class Ordem {
         this.data = new Date();
     }
 
-    public int getIdOrdem(){
+    public int getIdOrdem() {
         return idOrdem;
     }
 
-    public String getTipo(){
+    public String getTipo() {
         return tipo;
     }
 
-    public Date getData(){
+    public Date getData() {
         return data;
     }
 
-    public float getMontante(){
+    public float getMontante() {
         return montante;
     }
 
-    public String getStatus(){
+    public String getStatus() {
         return status;
     }
 
-    public void setIdOrdem(int idOrdem){
+    public void setIdOrdem(int idOrdem) {
         this.idOrdem = idOrdem;
     }
 
-    public void setTipo(String tipo){
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
-    public void setData(){
+    public void setData() {
         this.data = new Date();
     }
 
-    public void setMontante(float montante){
+    public void setMontante(float montante) {
         this.montante = montante;
     }
 
-    public void setStatus(String status){
+    public void setStatus(String status) {
         this.status = status;
     }
 }

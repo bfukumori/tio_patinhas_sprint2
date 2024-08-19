@@ -1,4 +1,4 @@
-package tiopatinhas.models;
+package br.com.fiap.model;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +15,7 @@ public class Usuario {
     private List<Conta> contas;
 
 
-    public UUID getIdUsusario() {
+    public UUID getIdUsuario() {
         return idUsuario;
     }
 
@@ -105,7 +105,7 @@ public class Usuario {
     private String gerarNumeroConta() {
         String cpfString = String.valueOf(cpf);
         String ultimosQuatroDigitos = cpfString.substring(7);
-        return idUsuario.toString().substring(0,3) + ultimosQuatroDigitos;
+        return idUsuario.toString().substring(0, 3) + ultimosQuatroDigitos;
     }
 
     public List<Conta> listarContas() {
