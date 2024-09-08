@@ -2,7 +2,7 @@ package br.com.fiap.model;
 
 import java.util.ArrayList;
 
-public class ContaInvestimento extends Conta2 {
+public class ContaInvestimento extends Conta {
     private ArrayList<Ativo> ativos = new ArrayList<>();
 
     public void adicionarAtivo(Ativo ativo) {
