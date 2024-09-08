@@ -1,5 +1,5 @@
 package br.com.fiap.model;
 
-public class ContaCorrente extends Conta2{
+public class ContaCorrente extends Conta {
 
 }
