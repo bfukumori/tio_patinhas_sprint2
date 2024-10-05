@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public class CryptoAsset {
-    private UUID id;
-    private String assetName;
-    private String symbol;
+    private UUID id = UUID.randomUUID();
+    private final String assetName;
+    private final String symbol;
     private BigDecimal currentPrice;
 
     public CryptoAsset(UUID id, String assetName, String symbol, BigDecimal currentPrice) {
@@ -17,7 +17,6 @@ public class CryptoAsset {
     }
 
     public CryptoAsset(String assetName, String symbol, BigDecimal currentPrice) {
-        this.id = UUID.randomUUID();
         this.assetName = assetName;
         this.symbol = symbol;
         this.currentPrice = currentPrice;
@@ -35,16 +34,8 @@ public class CryptoAsset {
         return assetName;
     }
 
-    public void setAssetName(String assetName) {
-        this.assetName = assetName;
-    }
-
     public String getSymbol() {
         return symbol;
-    }
-
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
     }
 
     public BigDecimal getCurrentPrice() {
@@ -53,10 +44,6 @@ public class CryptoAsset {
 
     public void setCurrentPrice(BigDecimal currentPrice) {
         this.currentPrice = currentPrice;
-    }
-
-    public void updatePrice(BigDecimal newPrice) {
-        this.currentPrice = newPrice;
     }
 
     @Override

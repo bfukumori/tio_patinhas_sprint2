@@ -1,51 +1,33 @@
 package br.com.fiap.model;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import br.com.fiap.utils.CpfUtils;
+
 import java.util.UUID;
 
 public class User {
 
-
-    private UUID id;
+    private UUID id = UUID.randomUUID();
     private String name;
     private String email;
-    private String password;
     private String document;
-    private boolean twoFactorAuthEnabled;
-    private LocalDateTime createdAt;
-    private List<CompanyAccount> companyAccounts;
+    private boolean twoFactorAuthEnabled = false;
 
-
-    public User(String name, String email, String document, String password) {
-        this.id = UUID.randomUUID();
-        this.name = name;
-        this.email = email;
-        this.document = document;
-        this.password = password;
-        this.twoFactorAuthEnabled = false;
-        this.createdAt = LocalDateTime.now();
-        this.companyAccounts = new ArrayList<>();
-    }
-
-    public User(UUID id, String name, String email, String document, String password, List<CompanyAccount> companyAccounts) {
+    public User(UUID id, String name, String email, String document, boolean twoFactorAuthEnabled) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.document = document;
-        this.password = password;
-        this.twoFactorAuthEnabled = false;
-        this.createdAt = LocalDateTime.now();
-        this.companyAccounts = new ArrayList<>();
+        setDocument(document);
+        this.twoFactorAuthEnabled = twoFactorAuthEnabled;
+    }
+
+    public User(String name, String email, String document) {
+        this.name = name;
+        this.email = email;
+        setDocument(document);
     }
 
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -69,39 +51,15 @@ public class User {
     }
 
     public void setDocument(String document) {
-        this.document = document;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+        if (CpfUtils.isValidCpf(document)) {
+            this.document = CpfUtils.removeFormatting(document);
+        } else {
+            throw new IllegalArgumentException("CPF inválido.");
+        }
     }
 
     public boolean isTwoFactorAuthEnabled() {
         return twoFactorAuthEnabled;
-    }
-
-    public void setTwoFactorAuthEnabled(boolean twoFactorAuthEnabled) {
-        this.twoFactorAuthEnabled = twoFactorAuthEnabled;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public List<CompanyAccount> getCompanyAccounts() {
-        return companyAccounts;
-    }
-
-    public void setCompanyAccounts(List<CompanyAccount> companyAccounts) {
-        this.companyAccounts = companyAccounts;
     }
 
     public void enableTwoFactorAuth() {
@@ -118,11 +76,8 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
-                ", document='" + document + '\'' +
-                ", password='" + password + '\'' +
+                ", document='" + CpfUtils.formatCpf(document) + '\'' +
                 ", twoFactorAuthEnabled=" + twoFactorAuthEnabled +
-                ", createdAt=" + createdAt +
-                ", companyAccountCount=" + (companyAccounts != null ? companyAccounts.size() : 0) +
                 '}';
     }
 }

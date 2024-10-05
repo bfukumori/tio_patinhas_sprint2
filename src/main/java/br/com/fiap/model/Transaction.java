@@ -1,34 +1,32 @@
 package br.com.fiap.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Transaction {
-    private UUID id;
-    private TransactionType transactionType;
-    private BigDecimal quantity;
-    private BigDecimal priceAtTransaction;
-    private Timestamp transactionDate;
-    private Wallet fromWallet;
-    private Wallet toWallet;
+    private UUID id = UUID.randomUUID();
+    private final TransactionType transactionType;
+    private final BigDecimal quantity;
+    private final BigDecimal priceAtTransaction;
+    private LocalDateTime transactionDate = LocalDateTime.now();
+    private final Wallet fromWallet;
+    private final Wallet toWallet;
 
-    public Transaction(UUID id, TransactionType transactionType, BigDecimal quantity, BigDecimal priceAtTransaction, Timestamp transactionDate, Wallet fromWallet, Wallet toWallet) {
+    public Transaction(UUID id, TransactionType transactionType, BigDecimal quantity, BigDecimal priceAtTransaction, Wallet fromWallet, Wallet toWallet, LocalDateTime transactionDate) {
         this.id = id;
         this.transactionType = transactionType;
         this.quantity = quantity;
         this.priceAtTransaction = priceAtTransaction;
-        this.transactionDate = transactionDate;
         this.fromWallet = fromWallet;
         this.toWallet = toWallet;
+        this.transactionDate = transactionDate;
     }
 
-    public Transaction(TransactionType transactionType, BigDecimal quantity, BigDecimal priceAtTransaction, Timestamp transactionDate, Wallet fromWallet, Wallet toWallet) {
-        this.id = UUID.randomUUID();
+    public Transaction(TransactionType transactionType, BigDecimal quantity, BigDecimal priceAtTransaction, Wallet fromWallet, Wallet toWallet) {
         this.transactionType = transactionType;
         this.quantity = quantity;
         this.priceAtTransaction = priceAtTransaction;
-        this.transactionDate = transactionDate;
         this.fromWallet = fromWallet;
         this.toWallet = toWallet;
     }
@@ -37,56 +35,28 @@ public class Transaction {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public TransactionType getTransactionType() {
         return transactionType;
-    }
-
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
     }
 
     public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(BigDecimal quantity) {
-        this.quantity = quantity;
-    }
-
     public BigDecimal getPriceAtTransaction() {
         return priceAtTransaction;
     }
 
-    public void setPriceAtTransaction(BigDecimal priceAtTransaction) {
-        this.priceAtTransaction = priceAtTransaction;
-    }
-
-    public Timestamp getTransactionDate() {
+    public LocalDateTime getTransactionDate() {
         return transactionDate;
-    }
-
-    public void setTransactionDate(Timestamp transactionDate) {
-        this.transactionDate = transactionDate;
     }
 
     public Wallet getFromWallet() {
         return fromWallet;
     }
 
-    public void setFromWallet(Wallet fromWallet) {
-        this.fromWallet = fromWallet;
-    }
-
     public Wallet getToWallet() {
         return toWallet;
-    }
-
-    public void setToWallet(Wallet toWallet) {
-        this.toWallet = toWallet;
     }
 
     @Override

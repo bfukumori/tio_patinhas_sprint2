@@ -1,22 +1,24 @@
 package br.com.fiap.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class CompanyAccount {
-    private UUID id;
-    private User owner;
+    private UUID id = UUID.randomUUID();
+    private final User owner;
     private String companyName;
     private String companyIdentifier;
-    private List<Wallet> wallets;
 
-    public CompanyAccount(User owner, String companyName) {
-        this.id = UUID.randomUUID();
+    public CompanyAccount(UUID id, User owner, String companyName) {
+        this.id = id;
         this.owner = owner;
         this.companyName = companyName;
         this.companyIdentifier = generateAccountNumber();
-        this.wallets = new ArrayList<>();
+    }
+
+    public CompanyAccount(User owner, String companyName) {
+        this.owner = owner;
+        this.companyName = companyName;
+        this.companyIdentifier = generateAccountNumber();
     }
 
     private String generateAccountNumber() {
@@ -39,16 +41,16 @@ public class CompanyAccount {
         return companyName;
     }
 
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     public String getCompanyIdentifier() {
         return companyIdentifier;
     }
 
-    public List<Wallet> getWallets() {
-        return wallets;
-    }
-
-    public void addWallet(Wallet wallet) {
-        this.wallets.add(wallet);
+    public void setCompanyIdentifier(String companyIdentifier) {
+        this.companyIdentifier = companyIdentifier;
     }
 
     @Override
@@ -58,7 +60,6 @@ public class CompanyAccount {
                 ", owner=" + owner.getName() +
                 ", companyName='" + companyName + '\'' +
                 ", companyIdentifier='" + companyIdentifier + '\'' +
-                ", walletCount=" + (wallets != null ? wallets.size() : 0) +
                 '}';
     }
 }
