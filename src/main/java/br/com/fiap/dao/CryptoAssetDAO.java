@@ -34,7 +34,7 @@ public class CryptoAssetDAO {
     }
 
     public void register(CryptoAsset cryptoAsset) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO t_tio_patinhas_crypto_assets (id,asset_name,symbol,current_price) VALUES (?,?,?,?)");
+        PreparedStatement stm = connection.prepareStatement("INSERT INTO t_crypto_assets (id,asset_name,symbol,current_price) VALUES (?,?,?,?)");
 
         stm.setString(1, cryptoAsset.getId().toString());
         stm.setString(2, cryptoAsset.getAssetName());
@@ -45,7 +45,7 @@ public class CryptoAssetDAO {
     }
 
     public CryptoAsset findById(UUID id) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_tio_patinhas_crypto_assets WHERE id = ?");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_crypto_assets WHERE id = ?");
         stm.setString(1, id.toString());
 
         ResultSet rs = stm.executeQuery();
@@ -58,7 +58,7 @@ public class CryptoAssetDAO {
     }
 
     public List<CryptoAsset> getAll() throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_tio_patinhas_crypto_assets");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_crypto_assets");
         ResultSet rs = stm.executeQuery();
         List<CryptoAsset> cryptoAssets = new ArrayList<>();
 
@@ -70,7 +70,7 @@ public class CryptoAssetDAO {
     }
 
     public void delete(UUID id) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("DELETE FROM t_tio_patinhas_crypto_assets WHERE id = ?");
+        PreparedStatement stm = connection.prepareStatement("DELETE FROM t_crypto_assets WHERE id = ?");
         stm.setString(1, id.toString());
 
         int line = stm.executeUpdate();

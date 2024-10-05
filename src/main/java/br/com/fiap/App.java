@@ -47,11 +47,13 @@ public class App {
                     case 5:
                         CreateTransactionView.execute(sc, walletDAO, transactionDao);
                         break;
+                    case 0:
+                        System.out.println("Exiting...");
+                        break;
                     default:
                         System.out.println("Invalid option, please try again.");
                 }
             } while (option != 0);
-            System.out.println("Exiting...");
             userDao.closeConnection();
             companyAccountDao.closeConnection();
             cryptoAssetDao.closeConnection();

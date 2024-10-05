@@ -5,18 +5,18 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Transaction {
-    private UUID id = UUID.randomUUID();
+    private final UUID id;
     private final TransactionType transactionType;
-    private final BigDecimal quantity;
+    private BigDecimal quantity;
     private final BigDecimal priceAtTransaction;
-    private LocalDateTime transactionDate = LocalDateTime.now();
+    private final LocalDateTime transactionDate;
     private final Wallet fromWallet;
     private final Wallet toWallet;
 
     public Transaction(UUID id, TransactionType transactionType, BigDecimal quantity, BigDecimal priceAtTransaction, Wallet fromWallet, Wallet toWallet, LocalDateTime transactionDate) {
         this.id = id;
         this.transactionType = transactionType;
-        this.quantity = quantity;
+        setQuantity(quantity);
         this.priceAtTransaction = priceAtTransaction;
         this.fromWallet = fromWallet;
         this.toWallet = toWallet;
@@ -24,11 +24,13 @@ public class Transaction {
     }
 
     public Transaction(TransactionType transactionType, BigDecimal quantity, BigDecimal priceAtTransaction, Wallet fromWallet, Wallet toWallet) {
+        this.id = UUID.randomUUID();
         this.transactionType = transactionType;
-        this.quantity = quantity;
+        setQuantity(quantity);
         this.priceAtTransaction = priceAtTransaction;
         this.fromWallet = fromWallet;
         this.toWallet = toWallet;
+        this.transactionDate = LocalDateTime.now();
     }
 
     public UUID getId() {
@@ -41,6 +43,13 @@ public class Transaction {
 
     public BigDecimal getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(BigDecimal quantity) {
+        if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Quantity must be greater than zero");
+        }
+        this.quantity = quantity;
     }
 
     public BigDecimal getPriceAtTransaction() {

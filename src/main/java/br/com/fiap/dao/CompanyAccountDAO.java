@@ -33,17 +33,18 @@ public class CompanyAccountDAO {
     }
 
     public void register(CompanyAccount companyAccount) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO t_tio_patinhas_company_accounts (id,owner_id,company_name) VALUES (?,?,?)");
+        PreparedStatement stm = connection.prepareStatement("INSERT INTO t_company_accounts (id,owner_id,company_name,company_identifier) VALUES (?,?,?,?)");
 
         stm.setString(1, companyAccount.getId().toString());
         stm.setString(2, companyAccount.getOwner().getId().toString());
         stm.setString(3, companyAccount.getCompanyName());
+        stm.setString(4, companyAccount.getCompanyIdentifier());
 
         stm.executeUpdate();
     }
 
     public CompanyAccount findById(UUID id) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_tio_patinhas_company_accounts WHERE id = ?");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_company_accounts WHERE id = ?");
         stm.setString(1, id.toString());
 
         ResultSet rs = stm.executeQuery();
@@ -56,7 +57,7 @@ public class CompanyAccountDAO {
     }
 
     public List<CompanyAccount> getAll() throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_tio_patinhas_company_accounts");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_company_accounts");
         ResultSet rs = stm.executeQuery();
         List<CompanyAccount> companyAccounts = new ArrayList<>();
 
@@ -68,7 +69,7 @@ public class CompanyAccountDAO {
     }
 
     public void delete(UUID id) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("DELETE FROM t_tio_patinhas_company_accounts WHERE id = ?");
+        PreparedStatement stm = connection.prepareStatement("DELETE FROM t_company_accounts WHERE id = ?");
         stm.setString(1, id.toString());
 
         int line = stm.executeUpdate();

@@ -40,17 +40,19 @@ public class WalletDAO {
     }
 
     public void register(Wallet wallet) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO t_tio_patinhas_wallets (id,company_account_id,crypto_asset_id) VALUES (?,?,?)");
+        PreparedStatement stm = connection.prepareStatement("INSERT INTO t_wallets (id,company_account_id,crypto_asset_id,balance,quantity) VALUES (?,?,?,?,?)");
 
         stm.setString(1, wallet.getId().toString());
         stm.setString(2, wallet.getCompanyAccount().getId().toString());
         stm.setString(3, wallet.getCryptoAsset().getId().toString());
+        stm.setBigDecimal(4, wallet.getBalance());
+        stm.setBigDecimal(5, wallet.getQuantity());
 
         stm.executeUpdate();
     }
 
     public Wallet findById(UUID id) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_tio_patinhas_wallets WHERE id = ?");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_wallets WHERE id = ?");
         stm.setString(1, id.toString());
 
         ResultSet rs = stm.executeQuery();
@@ -63,7 +65,7 @@ public class WalletDAO {
     }
 
     public List<Wallet> getAll() throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_tio_patinhas_wallets");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_wallets");
         ResultSet rs = stm.executeQuery();
         List<Wallet> wallets = new ArrayList<>();
 
@@ -75,7 +77,7 @@ public class WalletDAO {
     }
 
     public void delete(UUID id) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("DELETE FROM t_tio_patinhas_wallets WHERE id = ?");
+        PreparedStatement stm = connection.prepareStatement("DELETE FROM t_wallets WHERE id = ?");
         stm.setString(1, id.toString());
 
         int line = stm.executeUpdate();

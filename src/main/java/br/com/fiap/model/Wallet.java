@@ -4,29 +4,30 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public class Wallet {
-    private UUID id = UUID.randomUUID();
+    private final UUID id;
     private final CompanyAccount companyAccount;
     private CryptoAsset cryptoAsset;
-    private BigDecimal quantity = BigDecimal.ZERO;
-    private final BigDecimal balance = quantity.multiply(cryptoAsset.getCurrentPrice());
+    private BigDecimal quantity;
+    private final BigDecimal balance;
 
     public Wallet(UUID id, CompanyAccount companyAccount, CryptoAsset cryptoAsset) {
         this.id = id;
         this.companyAccount = companyAccount;
         this.cryptoAsset = cryptoAsset;
+        this.quantity = BigDecimal.ZERO;
+        this.balance = quantity.multiply(cryptoAsset.getCurrentPrice());
     }
 
     public Wallet(CompanyAccount companyAccount, CryptoAsset cryptoAsset) {
+        this.id = UUID.randomUUID();
         this.companyAccount = companyAccount;
         this.cryptoAsset = cryptoAsset;
+        this.quantity = BigDecimal.ZERO;
+        this.balance = quantity.multiply(cryptoAsset.getCurrentPrice());
     }
 
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public CompanyAccount getCompanyAccount() {
@@ -63,6 +64,7 @@ public class Wallet {
                 "id=" + id +
                 ", companyAccount=" + companyAccount.getCompanyName() +
                 ", cryptoAsset=" + cryptoAsset.getAssetName() +
+                ", quantity=" + quantity +
                 ", balance=" + balance +
                 '}';
     }

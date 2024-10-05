@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class User {
 
-    private UUID id = UUID.randomUUID();
+    private final UUID id;
     private String name;
     private String email;
     private String document;
@@ -21,6 +21,7 @@ public class User {
     }
 
     public User(String name, String email, String document) {
+        this.id = UUID.randomUUID();
         this.name = name;
         this.email = email;
         setDocument(document);

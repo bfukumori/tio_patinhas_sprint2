@@ -3,10 +3,10 @@ package br.com.fiap.model;
 import java.util.UUID;
 
 public class CompanyAccount {
-    private UUID id = UUID.randomUUID();
+    private final UUID id;
     private final User owner;
-    private String companyName;
-    private String companyIdentifier;
+    private final String companyName;
+    private final String companyIdentifier;
 
     public CompanyAccount(UUID id, User owner, String companyName) {
         this.id = id;
@@ -16,6 +16,7 @@ public class CompanyAccount {
     }
 
     public CompanyAccount(User owner, String companyName) {
+        this.id = UUID.randomUUID();
         this.owner = owner;
         this.companyName = companyName;
         this.companyIdentifier = generateAccountNumber();
@@ -26,7 +27,7 @@ public class CompanyAccount {
             throw new IllegalStateException("Owner cannot be null when generating account number.");
         }
         // Generate a simple account number using the owner's document
-        return "ACC-" + this.owner.getDocument() + "-" + this.id.toString().substring(0, 6).toUpperCase();
+        return "ACC-" + this.owner.getDocument().substring(0,4) + "-" + this.id.toString().substring(0, 6).toUpperCase();
     }
 
     public UUID getId() {
@@ -41,16 +42,8 @@ public class CompanyAccount {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
     public String getCompanyIdentifier() {
         return companyIdentifier;
-    }
-
-    public void setCompanyIdentifier(String companyIdentifier) {
-        this.companyIdentifier = companyIdentifier;
     }
 
     @Override

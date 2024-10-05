@@ -39,10 +39,10 @@ public class TransactionDAO {
     }
 
     public void register(Transaction transaction) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO t_tio_patinhas_transactions (id,transaction_type,quantity, price_at_transaction, transaction_date, from_wallet_id, to_wallet_id) VALUES (?,?,?,?,?,?,?)");
+        PreparedStatement stm = connection.prepareStatement("INSERT INTO t_transactions (id,transaction_type,quantity, price_at_transaction, transaction_date, from_wallet_id, to_wallet_id) VALUES (?,?,?,?,?,?,?)");
 
         stm.setString(1, transaction.getId().toString());
-        stm.setObject(2, transaction.getTransactionType());
+        stm.setString(2, transaction.getTransactionType().toString());
         stm.setBigDecimal(3, transaction.getQuantity());
         stm.setBigDecimal(4, transaction.getPriceAtTransaction());
         stm.setTimestamp(5, Timestamp.valueOf(transaction.getTransactionDate()));
@@ -53,7 +53,7 @@ public class TransactionDAO {
     }
 
     public Transaction findById(UUID id) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_tio_patinhas_transactions WHERE id = ?");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_transactions WHERE id = ?");
         stm.setString(1, id.toString());
 
         ResultSet rs = stm.executeQuery();
@@ -66,7 +66,7 @@ public class TransactionDAO {
     }
 
     public List<Transaction> getAll() throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_tio_patinhas_transactions");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_transactions");
         ResultSet rs = stm.executeQuery();
         List<Transaction> transactions = new ArrayList<>();
 
@@ -78,7 +78,7 @@ public class TransactionDAO {
     }
 
     public void delete(UUID id) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("DELETE FROM t_tio_patinhas_transactions WHERE id = ?");
+        PreparedStatement stm = connection.prepareStatement("DELETE FROM t_transactions WHERE id = ?");
         stm.setString(1, id.toString());
 
         int line = stm.executeUpdate();

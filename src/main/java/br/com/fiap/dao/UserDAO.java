@@ -7,6 +7,7 @@ import br.com.fiap.utils.PasswordUtils;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class UserDAO {
@@ -25,25 +26,26 @@ public class UserDAO {
         String name = rs.getString("name");
         String email = rs.getString("email");
         String document = rs.getString("document");
-        boolean twoFactorAuthEnabled = rs.getInt("twoFactorAuthEnabled") == 1;
+        boolean twoFactorAuthEnabled = Objects.equals(rs.getString("two_factor_auth_enabled"), "1");
 
         return new User(id, name, email, document, twoFactorAuthEnabled);
     }
 
     public void register(User user, String password) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("INSERT INTO t_tio_patinhas_users (id, name, email, document, password) VALUES (?, ?, ?, ?, ?)");
+        PreparedStatement stm = connection.prepareStatement("INSERT INTO t_users (id, name, email, document, password, two_factor_auth_enabled) VALUES (?, ?, ?, ?, ?, ?)");
 
         stm.setString(1, user.getId().toString());
         stm.setString(2, user.getName());
         stm.setString(3, user.getEmail());
         stm.setString(4, user.getDocument());
         stm.setString(5, PasswordUtils.hashPassword(password));
+        stm.setString(6, user.isTwoFactorAuthEnabled() ? "1" : "0");
 
         stm.executeUpdate();
     }
 
     public User findByEmail(String email) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT id,name,email,document FROM t_tio_patinhas_users WHERE email = ?");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_users WHERE email = ?");
         stm.setString(1, email);
 
         ResultSet rs = stm.executeQuery();
@@ -56,7 +58,7 @@ public class UserDAO {
     }
 
     public User findById(UUID id) throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT id,name,email,document,two_factor_auth_enabled FROM t_tio_patinhas_users WHERE id = ?");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_users WHERE id = ?");
         stm.setString(1, id.toString());
 
         ResultSet rs = stm.executeQuery();
@@ -69,7 +71,7 @@ public class UserDAO {
     }
 
     public List<User> getAll() throws SQLException {
-        PreparedStatement stm = connection.prepareStatement("SELECT id,name,email,document, two_factor_auth_enabled FROM t_tio_patinhas_users");
+        PreparedStatement stm = connection.prepareStatement("SELECT * FROM t_users");
         ResultSet rs = stm.executeQuery();
         List<User> users = new ArrayList<>();
 
@@ -82,11 +84,11 @@ public class UserDAO {
 
     public void update(User user) throws SQLException {
 
-        PreparedStatement stm = connection.prepareStatement("UPDATE t_tio_patinhas_users SET name = ?, email = ?, document = ?, two_factor_auth_enabled = ? WHERE id = ?");
+        PreparedStatement stm = connection.prepareStatement("UPDATE t_users SET name = ?, email = ?, document = ?, two_factor_auth_enabled = ? WHERE id = ?");
         stm.setString(1, user.getName());
         stm.setString(2, user.getEmail());
         stm.setString(3, user.getDocument());
-        stm.setInt(4, user.isTwoFactorAuthEnabled() ? 1 : 0);
+        stm.setString(4, user.isTwoFactorAuthEnabled() ? "1" : "0");
         stm.setString(5, user.getId().toString());
 
         stm.executeUpdate();
@@ -94,7 +96,7 @@ public class UserDAO {
 
     public void delete(UUID id) throws SQLException {
 
-        PreparedStatement stm = connection.prepareStatement("DELETE FROM t_tio_patinhas_users WHERE id = ?");
+        PreparedStatement stm = connection.prepareStatement("DELETE FROM t_users WHERE id = ?");
         stm.setString(1, id.toString());
 
         int line = stm.executeUpdate();

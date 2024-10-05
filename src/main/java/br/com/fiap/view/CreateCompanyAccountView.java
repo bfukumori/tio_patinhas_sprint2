@@ -16,6 +16,11 @@ public class CreateCompanyAccountView {
 
         User owner = userDao.findById(userId);
 
+        if (owner == null) {
+            System.out.println("User with given ID not found.");
+            return;
+        }
+
         System.out.print("Enter company name: ");
         String companyName = sc.nextLine();
 
