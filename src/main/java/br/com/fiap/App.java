@@ -1,6 +1,7 @@
 package br.com.fiap;
 
 import br.com.fiap.dao.*;
+import br.com.fiap.model.User;
 import br.com.fiap.view.*;
 
 import java.sql.SQLException;
@@ -47,6 +48,34 @@ public class App {
                     case 5:
                         CreateTransactionView.execute(sc, walletDAO, transactionDao);
                         break;
+                    case 6:
+                       ListUserView.execute(userDao);
+                        break;
+                    case 7:
+                        ListCompanyAccountView.execute(companyAccountDao);
+                        break;
+                    case 8:
+                        ListCryptoAssetView.execute(cryptoAssetDao);
+                        break;
+                    case 9:
+                        walletDAO.getAll();
+                        break;
+                    case 10:
+                        transactionDao.getAll();
+                        break;
+                    case 11:
+                        DeleteUserView.execute(sc, userDao);
+                        break;
+                    case 12:
+                        DeleteCompanyAccountView.execute(sc, companyAccountDao);
+                        break;
+                    case 13:
+                        DeleteCryptoAssetView.execute(sc, cryptoAssetDao);
+                        break;
+                    case 14:
+                        break;
+                    case 15:
+                        break;
                     case 0:
                         System.out.println("Exiting...");
                         break;
@@ -71,8 +100,17 @@ public class App {
         System.out.println("3. Create Crypto Asset");
         System.out.println("4. Create Wallet");
         System.out.println("5. Create Transaction");
+        System.out.println("6. List Users");
+        System.out.println("7. List Company Accounts");
+        System.out.println("8. List CryptoAssets");
+        System.out.println("9. List Wallets");
+        System.out.println("10. List Transactions");
+        System.out.println("11. Delete User");
+        System.out.println("12. Delete Company Accounts");
+        System.out.println("13. Delete CryptoAssets");
+        System.out.println("14. Delete Wallets");
+        System.out.println("15. Delete Transactions");
         System.out.println("0. Exit");
         System.out.print("Choose an option: ");
     }
 }
-
