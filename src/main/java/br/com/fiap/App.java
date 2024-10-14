@@ -58,10 +58,10 @@ public class App {
                         ListCryptoAssetView.execute(cryptoAssetDao);
                         break;
                     case 9:
-                        walletDAO.getAll();
+                        ListWalletView.execute(walletDAO);
                         break;
                     case 10:
-                        transactionDao.getAll();
+                        ListTransactionView.execute(transactionDao);
                         break;
                     case 11:
                         DeleteUserView.execute(sc, userDao);
@@ -73,8 +73,10 @@ public class App {
                         DeleteCryptoAssetView.execute(sc, cryptoAssetDao);
                         break;
                     case 14:
+                        DeleteWalletView.execute(sc, walletDAO);
                         break;
                     case 15:
+                        DeleteTransactionsView.execute(sc, transactionDao);
                         break;
                     case 0:
                         System.out.println("Exiting...");
